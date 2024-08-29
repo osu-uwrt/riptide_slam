@@ -7,9 +7,42 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(vision_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(GTSAM REQUIRED)
+
+set(deps
+ ament_cmake
+ rclcpp
+ vision_msgs
+ geometry_msgs
+ GTSAM
+)
+
+add_library(slam SHARED
+ src/main.cpp
+ src/SlamNode.cpp
+)
+
+target_include_directories(slam PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+
+
+ament_target_dependencies(slam ${deps})
+
+add_executable(${PROJECT_NAME} src/main.cpp)
+
+target_link_libraries(${PROJECT_NAME} slam)
+
+install(DIRECTORY include/riptide_slam
+  DESTINATION include
+)
+
+install(TARGETS slam
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

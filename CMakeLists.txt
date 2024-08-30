@@ -10,6 +10,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(vision_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(GTSAM REQUIRED)
 
 set(deps
@@ -17,6 +18,7 @@ set(deps
  rclcpp
  vision_msgs
  geometry_msgs
+ sensor_msgs
  GTSAM
 )
 
@@ -28,9 +30,12 @@ add_library(slam SHARED
 target_include_directories(slam PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
-
+  
 
 ament_target_dependencies(slam ${deps})
+
+# GTSAM needs Boost to work
+target_link_libraries(slam gtsam)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
@@ -40,7 +45,7 @@ install(DIRECTORY include/riptide_slam
   DESTINATION include
 )
 
-install(TARGETS slam
+install(TARGETS ${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME}
 )
 

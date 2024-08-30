@@ -1,5 +1,8 @@
-#include <chrono>
 #include <rclcpp/rclcpp.hpp>
+
+#include <sensor_msgs/msg/imu.hpp>
+
+#include <gtsam/nonlinear/ISAM2.h>
 
 using namespace std::chrono_literals;
 
@@ -18,6 +21,14 @@ class SlamNode : public rclcpp::Node {
 
     // Callback when any Detections3DArray is recieved
     // void DetectionCallback();
+
+    private:
+
+    /// ISam2 Instance
+    gtsam::ISAM2* slam;
+
+    
+
 };
 
 };

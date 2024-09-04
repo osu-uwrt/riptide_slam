@@ -26,8 +26,9 @@ class SlamNode : public rclcpp::Node {
 
     /// ISam2 Instance
     gtsam::ISAM2* slam;
+    rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_subscription;
 
-    
+    void IMUCallback(const sensor_msgs::msg::Imu msg);
 
 };
 

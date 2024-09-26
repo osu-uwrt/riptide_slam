@@ -3,6 +3,7 @@
 #include <sensor_msgs/msg/imu.hpp>
 
 #include <gtsam/nonlinear/ISAM2.h>
+#include <gtsam/navigation/CombinedImuFactor.h>
 
 using namespace std::chrono_literals;
 
@@ -24,9 +25,17 @@ class SlamNode : public rclcpp::Node {
 
     private:
 
+    // Factor Index
+    int index;
+
     /// ISam2 Instance
     gtsam::ISAM2* slam;
+    gtsam::NonlinearFactorGraph graph;
+
+    // IMU Stuff
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_subscription;
+    gtsam::PreintegratedCombinedMeasurements imu_data;
+    double imu_dt;
 
     void IMUCallback(const sensor_msgs::msg::Imu msg);
 

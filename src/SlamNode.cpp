@@ -17,11 +17,14 @@ namespace riptide_slam {
 
 SlamNode::SlamNode() : rclcpp::Node("riptide_slam") {
 
-    slam = new gtsam::ISAM2();
+    this->slam = gtsam::ISAM2();
 
-    boost::shared_ptr<gtsam::PreintegrationParams> imuParams = gtsam::PreintegrationParams::MakeSharedU(9.81); // Gravity magnitude
+    this->graph = gtsam::NonlinearFactorGraph();
 
-    imu_subscription = this->create_subscription<sensor_msgs::msg::Imu>("topic", rclcpp::SensorDataQoS(), std::bind(&SlamNode::IMUCallback, this, _1));
+
+    this->imu_data = gtsam::PreintegratedCombinedMeasurements();
+
+    this->imu_subscription = this->create_subscription<sensor_msgs::msg::Imu>("topic", rclcpp::SensorDataQoS(), std::bind(&SlamNode::IMUCallback, this, _1));
 
 }
 
@@ -43,7 +46,7 @@ void SlamNode::IMUCallback(sensor_msgs::msg::Imu msg) {
         msg.angular_velocity.z
     );
 
-    imu_data.integrateMeasurement(linearAccel, rotationVelocity, imu_dt);
+    this->imu_data.integrateMeasurement(linearAccel, rotationVelocity, imu_dt);
 
 }
 

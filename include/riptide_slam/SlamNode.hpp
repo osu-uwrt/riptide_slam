@@ -29,7 +29,7 @@ class SlamNode : public rclcpp::Node {
     int index;
 
     /// ISam2 Instance
-    gtsam::ISAM2* slam;
+    gtsam::ISAM2 slam;
     gtsam::NonlinearFactorGraph graph;
 
     // IMU Stuff

@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
 
     rclcpp::Node::SharedPtr slam_node = std::make_shared<riptide_slam::SlamNode>();
 
-    rclcpp::executors::MultiThreadedExecutor exec;
+    rclcpp::executors::SingleThreadedExecutor exec;
     
     exec.add_node(slam_node);
 

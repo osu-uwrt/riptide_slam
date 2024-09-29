@@ -31,12 +31,15 @@ class SlamNode : public rclcpp::Node {
     /// ISam2 Instance
     gtsam::ISAM2 slam;
     gtsam::NonlinearFactorGraph graph;
+    gtsam::Values initalEstimate;
+    gtsam::Values optimizedValues;
 
     // IMU Stuff
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_subscription;
     gtsam::PreintegratedCombinedMeasurements imu_data;
-    double imu_dt;
+    sensor_msgs::msg::Imu previous_imu_msg;
 
+    void IMUFactor();
     void IMUCallback(const sensor_msgs::msg::Imu msg);
 
 };

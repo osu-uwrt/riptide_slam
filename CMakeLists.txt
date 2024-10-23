@@ -24,7 +24,7 @@ set(deps
  GTSAM
 )
 
-add_library(slam SHARED
+add_library(slam
  src/main.cpp
  src/SlamNode.cpp
 )

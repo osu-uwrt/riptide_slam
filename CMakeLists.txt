@@ -13,7 +13,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(GTSAM REQUIRED)
 find_package(Boost REQUIRED)
-find_package(Eigen3 REQUIRED)
+#find_package(Eigen3 REQUIRED)
 
 set(deps
  ament_cmake
@@ -37,8 +37,8 @@ target_include_directories(slam PUBLIC
 ament_target_dependencies(slam PUBLIC ${deps})
 
 # GTSAM needs Boost to work
-target_link_libraries(slam PUBLIC gtsam Eigen3::Eigen ${BOOST_LIBRARY_DIRS})
-INCLUDE_DIRECTORIES ( ${EIGEN3_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
+target_link_libraries(slam PUBLIC gtsam ${BOOST_LIBRARY_DIRS})
+INCLUDE_DIRECTORIES ( ${Boost_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 

@@ -25,6 +25,9 @@ class SlamNode : public rclcpp::Node {
 
     private:
 
+    size_t count_;
+    rclcpp::TimerBase::SharedPtr timer;
+
     // Factor Index
     int index;
 
@@ -37,7 +40,8 @@ class SlamNode : public rclcpp::Node {
     // IMU Stuff
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_subscription;
     gtsam::PreintegratedCombinedMeasurements imu_data;
-    sensor_msgs::msg::Imu previous_imu_msg;
+    gtsam::NavState previous_navstate;
+    u_int previous_timestamp;
 
     void IMUFactor();
     void IMUCallback(const sensor_msgs::msg::Imu msg);

@@ -25,7 +25,6 @@ class SlamNode : public rclcpp::Node {
 
     private:
 
-    size_t count_;
     rclcpp::TimerBase::SharedPtr timer;
 
     // Factor Index

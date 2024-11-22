@@ -15,7 +15,7 @@ using gtsam::symbol_shorthand::X;  // Pose3 (x,y,z,r,p,y)
 
 namespace riptide_slam {
 
-SlamNode::SlamNode() : rclcpp::Node("riptide_slam"), count_(0) {
+SlamNode::SlamNode() : rclcpp::Node("riptide_slam") {
 
       gtsam::noiseModel::Diagonal::shared_ptr pose_noise = gtsam::noiseModel::Diagonal::Sigmas(
     (gtsam::Vector(6) << 0.01, 0.01, 0.01, 0.5, 0.5, 0.5).finished() // (roll,pitch,yaw in rad; std on x,y,z in meters)

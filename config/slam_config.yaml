@@ -1,31 +1,20 @@
 /**/riptide_slam:
   ros__parameters:
-  
-    landmarks:
-      # Name that will be published in TF2
-      FRAME_NAME:
-        # Landmark ID make sure is unique
-        id: 0
 
-        # Pose of Object from Apriltag aka 0,0,0
-        pose: { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 }
-        noise: { 0, 0, 0, 0, 0, 0 }   # x y z rx ry rz
+    pose_key: "X"
+    velocity_key: "V"
 
+    # How long should factors exist before being
+    # marginalized out. (In Seconds)
+    # NOTE: Must be a decimal
+    smoother_lag: 60.0
 
-    imu:
-      - topic: ""
-        enable: [ true, true, true, true, # quaternion pos: x y z w
-                  true, true, true,       # angular vel: x y z
-                  true, true, true ]      # linear acc: x y z
+    plugins:
+      imu:
+        bias_key: "B"
 
-
-    twist:
-      - topic: ""
-        enable: [ true, true, true      # linear: x y z
-                  true, true, true ]    # angular: x y z
-
-
-    pose:
-      - topic: ""
-        enable: [ true, true, true          # Position: x y z
-                  true, true, true, true ]  # Quaternion: x y z w
+        imu_list:
+          vectornav:
+            topic: "topic1"
+          zed:
+            topic: "topic2"
